@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Necessary meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta name="description" content="cloymusic is an online music service that provides you hands on high quality online music
+    ">
+    <link rel="icon" href="/pngs/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utility.css">
+    <title>cloyumusic</title>
+</head>
+
+<body>
+    <div class="scbvr flex column vercenter">
+        <!-- header of the document -->
+        <header class="strfpg">
+            <nav class="navbar flex row vercenter relative">
+                <div class="logo top absolute noLeft flex row vercenter horcenter gap">
+                    <button class="menu horcenter radius vercenter">
+                    <img src="/svgs/hamb.svg" alt="" class="hamburger">
+                    </button>
+                    <img src="/pngs/cname.png" alt="logo" class="clogo">
+                </div>
+                <div class="search top flex row vercenter">
+                    <form action="" class="searchbar flex row vercenter fullWidth">
+                        <button class="home flex row horcenter"><img src="/svgs/home-2.svg"
+                                    class="homeicon"></button>
+                        <div class="inputbrowse flex row vercenter">
+                            <button class="searchbutton flex row vercenter"><img src="/svgs/search.svg" alt="search"
+                                class="searchSvg"></button>
+                            <input type="text" placeholder="Search for music" class="searchInput flex row horcenter"
+                                >
+                            
+                            <button class="browsebutton flex row vercenter"><img src="/svgs/browse.svg" alt=""
+                                    class="browseSvg"></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="logsign top flex row vercenter absolute noRight">
+                    <button class="signup">Sign Up</button>
+                    &nbsp;&nbsp;
+                    <button class="login">Log In</button>
+                </div>
+            </nav>
+        </header>
+        <!-- Main section of the document -->
+        <main class="mainSection">
+            <div class="main grid relative">
+                <!-- Library of website -->
+                <div class="library radius ">
+                    <div class="libhead flex row vercenter">
+                        <button class="librarybutton"><img src="/svgs/library.svg" alt="" class="libsvg"></button>
+                        <span class="ylib">&nbsp;&nbsp;Your library</span>
+                        <button class="moreOptions radius noFunction">
+                            <span class="more">+</span>
+                        </button>
+                    </div>
+                    <div class="playpod flex column">
+                        <div class="playlistCreation part">
+                            <p class="createPlaylist create">Create your first playlist</p>
+                            <p class="exp">It's easy, we'll help you</p>
+                            <div class="play partB"><button class="playbutton buttonpart noFunction">
+                                    <p class="inbutton">Create playlist</p>
+                                </button></div>
+                        </div>
+
+                        <div class="podcast part">
+                            <p class="findPodcast create">Let's find some Podcasts to follow</p>
+
+                            <p class="exp">We'll keep you updated on new episodes</p>
+
+                            <div class="pod partB">
+                                <button class="podbutton buttonpart noFunction">
+                                    <p class="inbutton">Browse podcasts</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footOptions">
+                        <ul class="options flex row">
+                            <li><a href="" class="ac1">
+                                    <p>legal</p>
+                                </a> </li>
+                            <li><a href="" class="ac2">
+                                    <p>Safety & Center</p>
+                                </a></li>
+                            <li><a href="" class="ac3">
+                                    <p>Privacy Policy</p>
+                                </a></li>
+                            <li><a href="" class="ac4">
+                                    <p>Cookies</p>
+                                </a></li>
+                            <li><a href="" class="ac5">
+                                    <p>About Ads</p>
+                                </a></li>
+                            <li><a href="" class="ac6">
+                                    <p>Accessibility</p>
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- musicSection of the site  -->
+                <div class="musicSection radius relative">
+
+                    <!-- player -->
+                    <div class="player flex column fixed horcenter vercenter radius">
+                        <div class="flex row spaceBetween fullWidth vercenter">
+                        <div class=" currentSongName relative ">
+                            <p class="nameIs"></p>
+                        </div>
+                        <div class="playerButtons fixed  flex row">
+                            <button class="previous playerButton"><img src="/svgs/previous.svg" alt="" class="preSvg playerSvg"></button>
+                            <button class="playPause playerButton"><img src="/svgs/plays.svg" alt="" class="playPauseSvg playerSvg"></button>
+                            <button class="next playerButton"><img src="/svgs/next.svg" alt="" class="nextSvg playerSvg"></button>
+                        </div>
+                        <div class="duration flex row noRight relative">
+                            <p class="currentTime">00:00</p>&nbsp;/&nbsp;
+                            <p class="durationTime">00:00</p>
+                        </div>
+                        </div>
+                        <div class="seekBar absolute fullWidth">
+                            <div class="seekBall relative"></div>
+                        </div>
+                        
+                    </div>
+
+                    <!-- division containing songs of the artist, album or playlist -->
+                    <div class="aapInfo column fixed">
+                        <div class="image flex horcenter vercenter relative">
+                            <button class="radius closeAap noBackground absolute"><img src="/svgs/Back.svg" alt="" class="goBackSvg"></button>
+                            <img src="/pngs/icon.png" alt="" class="aapImage">
+                            
+                        </div>
+                        <div class="aapTitle"><p class="actuTitle">Title
+                        </p></div>
+                        <div class="songListHead"><h3>Songs :</h3></div>
+                        <div class="songsList flex column">
+                            
+                        </div>
+
+                    </div>
+
+                    <!-- Artist Cards -->
+                    <Section class="artistSection">
+                        <div class="artistHead flex row vercenter">
+                            <p class="heading">Popular artists</p>
+                            <p class="moreArtists"><a href="" class="all">Show all</a></p>
+                        </div>
+
+                        <div class="artistBox flex row vercenter relative">
+                            <button class="scrollLeft"><img src="/svgs/left.svg" alt=""></button>
+
+                        <div class="artists scrollableDiv flex row vercenter">
+                          <div class="artist1 artist flex hover column">
+                                <div class="artistbg1 artistbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname1 artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                            <div class="artist2 artist hover flex column">
+                                <div class="artistbg2 artistbg relative">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname2 artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                            <div class="artist3 hover artist flex column">
+                                <div class="artistbg3 artistbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname3 artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                            <div class="artist4 artist flex hover column">
+                                <div class="artistbg4 artistbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname4 artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                            <div class="artist5 artist  hover flex column">
+                                <div class="artistbg5 artistbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname5 artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                            <div class="artist6 artist flex hover column">
+                                <div class="artistbg6 artistbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname6 artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                            <div class="artist7 artist hover flex column">
+                                <div class="artistbg7 artistbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname7 artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                            <div class="artist8 artist flex column hover">
+                                <div class="artistbg8 artistbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="artistInfo flex column">
+                                    <p class="artistname8  artistname">Artist name</p>
+                                    <p class="category">Artist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="scrollRight"><img src="/svgs/right.svg" alt=""></button>
+
+                     </div>
+                    </Section>
+
+                    <!-- Album Cards -->
+                    <section class="albumSection">
+                        <div class="albumHead flex row vercenter">
+                            <p class="heading">Popular ablums</p>
+                            <p class="moreAlbums"><a href="" class="all">Show all</a></p>
+                        </div>
+                        <div class="albumBox flex row vercenter relative">
+                            <button class="scrollLeft"><img src="/svgs/left.svg" alt=""></button>
+                        <div class="albums scrollableDiv flex row vercenter">
+                            <div class="album1 album flex column hover">
+                                <div class="albumbg1 albumbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname1 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            <div class="album2 album flex column hover">
+                                <div class="albumbg2 albumbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname2 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            <div class="album3 album flex column hover">
+                                <div class="albumbg3 albumbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname3 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            <div class="album4 album flex column hover">
+                                <div class="albumbg4 albumbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname4 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            <div class="album5 album flex hover column">
+                                <div class="albumbg5 albumbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname5 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            <div class="album6 album flex hover column">
+                                <div class="albumbg6 albumbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname6 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            <div class="album7 album flex hover column">
+                                <div class="albumbg7 albumbg">
+                                    <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname7 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            <div class="album8 album flex hover column">
+                                <div class="albumbg8 albumbg">
+                                    <button class=" plays column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                </div>
+                                <div class="albumInfo flex column">
+                                    <p class="albumname8 albumname">Album name</p>
+                                    <p class="category">Album</p>
+                                </div>
+                                </div>
+                            </div>
+                            <button class="scrollRight"><img src="/svgs/right.svg" alt=""></button>
+
+                            </div>
+                            </section>
+
+                            <!-- Playlist Cards -->
+                            <section class="playlistSection">
+                                <div class="playlistHead flex row vercenter">
+                                    <p class="heading">Cloymusic Playlists</p>
+                                    <p class="morePlaylist"><a href="" class="all">Show all</a></p>
+                                </div>
+                                <div class="playlistBox flex row vercenter relative">
+                                    <button class="scrollLeft"><img src="/svgs/left.svg" alt=""></button>
+                                <div class="playlists scrollableDiv flex row vercenter">
+                                    <div class="playlist1 playlist flex column hover">
+                                        <div class="playlistbg1 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname1 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>
+                                    <div class="playlist2 playlist flex column hover">
+                                        <div class="playlistbg2 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname2 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>
+                                    <div class="playlist3 playlist flex column hover">
+                                        <div class="playlistbg3 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname3 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>
+                                    <div class="playlist4 playlist flex column hover">
+                                        <div class="playlistbg4 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname4 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>
+                                    <div class="playlist5 playlist flex column hover">
+                                        <div class="playlistbg5 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname5 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>
+                                    <div class="playlist6 playlist flex column hover">
+                                        <div class="playlistbg6 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname6 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>
+                                    <div class="playlist7 playlist flex column hover">
+                                        <div class="playlistbg7 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname7 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>
+                                    <div class="playlist8 playlist flex column hover">
+                                        <div class="playlistbg8 playlistbg">
+                                            <button class="plays flex column vercenter horcenter absolute"><img src="/svgs/play.svg" alt="play button" class="playSvg"></button>
+                                        </div>
+                                        <div class="playlistInfo flex column">
+                                                    <p class="playlistname8 playlistname">Playlist name</p>
+                                            <p class="category">Playlist</p>
+                                        </div>
+                                     </div>                                   
+                                    </div>
+                                    <button class="scrollRight"><img src="/svgs/right.svg" alt=""></button>
+                                    </div>
+                            </section>
+
+                            <!-- Footer of the Site -->
+                            <footer class="footer">
+                               
+                            <div class="footerElements grid">
+                                <div class="company">
+                                    <ul class="companyOptions footerList">
+                                        <li class="list1Head">
+                                            <p class="head">Company</p>
+
+                                        </li>
+                                        <li class="firstOption">
+                                            <a href="" class="first">
+                                                <p class="first">About</p>
+                                            </a>                                        
+                                        </li>
+                                        <li class="secondOption">
+                                            <a href="" class="second">
+                                                <p class="second">Jobs</p>
+                                            </a>
+                                        </li>
+                                        <li class="thirdOption">
+                                            <a href="" class="third"><p class="third">For the record</p></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="communities">
+                                    <ul class="communityOptions footerList">
+                                        <li class="list2Head">
+                                            <p class="head">Communities</p>
+                                        </li>
+                                        <li class="firstOption">
+                                            <a href="" class="first">
+                                                <p class="first">Developers</p>
+                                            </a>                                        
+                                        </li>
+                                        <li class="secondOption">
+                                            <a href="" class="second">
+                                                <p class="second">Advertising</p>
+                                            </a>
+                                        </li>
+                                        <li class="thirdOption">
+                                            <a href="" class="third"><p class="third">Investors</p></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="cloymusicPlans">
+                                    <ul class="planOptions footerList">
+                                        <li class="list1Head">
+                                            <p class="head">Cloymusic Plans</p>
+
+                                        </li>
+                                        <li class="firstOption">
+                                            <a href="" class="first">
+                                                <p class="first">Premium Individual</p>
+                                            </a>                                        
+                                        </li>
+                                        <li class="secondOption">
+                                            <a href="" class="second">
+                                                <p class="second">Premium Family</p>
+                                            </a>
+                                        </li>
+                                        <li class="thirdOption">
+                                            <a href="" class="third"><p class="third">Premium Student</p></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="socialMediaHandles flex row horcenter ">
+                                    <div class="fb"><button class="fbButton socialButton"><img src="/svgs/fb.svg" alt="" class="fbSvg"></button></div>
+                                    <div class="insta"><button class="instaButton socialButton"><img src="/svgs/insta.svg" alt="" class="instaSvg"></button></div>
+                                    <div class="x"><button class="xButton socialButton"><img src="/svgs/x.svg" alt="" class="xSvg"></button></div>
+
+                                </div>
+                            </div>
+                            <div class="footerLogo">
+                                <img src="/pngs/icon.png" alt="Company Logo">
+                            </div>
+                            </footer>
+                            <div class="copyright"><p><a href="" class="copyrightInfo">&copy2024 Cloymusic</a></p></div>
+                        </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- script of website -->
+    <script src="script.js"></script>
+</body>
+
+</html>

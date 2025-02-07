@@ -1,0 +1,74 @@
+/*Utility Css*/
+.flex{
+    display: flex;
+}
+.vercenter{
+    align-items: center;
+}
+.horcenter{
+    justify-content: center;
+}
+.spaceBetween{
+    justify-content: space-between;
+}
+.spaceEvenly{
+    justify-content: space-evenly;
+}
+.spaceAround{
+    justify-content: space-around;
+}
+.row{
+    flex-direction: row;
+}
+.column{
+    flex-direction: column;
+}
+.testborder{
+    border: 2px solid red;
+}
+.grid{
+    display: grid;
+}
+.radius{
+    border: 0px;
+    border-radius: 5px;
+}
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+.fixed{
+    position: fixed;
+}
+.fullWidth{
+    width: 100%;
+}
+.noDisplay{
+    display: none;
+}
+.visible{
+    animation: moveup 0.3s cubic-bezier(0.01,-0.01, 0, 0.4) forwards;
+}
+.highlighting{
+    animation: highlighting 0.1s ease forwards ;
+}
+.gap{
+    gap: 15px;
+}
+.noBackground{
+    background: none;
+}
+.opaque{
+    opacity: 1;
+}
+.noLeft{
+    left: 10px;
+}
+.noRight{
+    right: 10px;
+}
+.noOverflow{
+    overflow: hidden;
+}
