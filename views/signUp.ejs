@@ -1,0 +1,27 @@
+<div popover id="signUpPopOver" class="signUpPopOver vercenter horcenter">
+    <form action="index.ejs" name="signUp" class="signUpForm">
+        <button type="button" popovertarget="signUpPopOver" popoveraction="hide" class="hidePopOver"><img src="/svgs/cross.svg" class="crossSvg" alt=""></button>
+        <section class="flex column">    
+            <label>Full Name</label>
+        <input type="text" placeholder="Enter your Full Name" class="signUpFullName">
+        </section>
+        <section class="flex column">    
+            <label>Username</label>
+            <input type="text" placeholder="Enter a Username" class="signUpUname" required>
+        </section>
+        <section class="flex column">    
+            <label>Email</label>
+            <input type="text" placeholder= "Enter your email" class="signUpEmail"  required >
+        </section>
+        <section class="flex column">    
+            <label>Password</label>
+            <input type="password" placeholder= "Enter a password" class="signUpPass" minlength="8" autocomplete="new-password" required >
+        </section>
+          <section class="flex column">    
+            <label>Confirm Password</label>
+            <input type="password" placeholder= "Enter same as above" class="confirmSignUpPass" minlength="8" autocomplete="new-password" required >
+        </section>
+        <button type="submit" class="signUpSubmitBtn">Sign Up</button>
+        <p class="logInIfAldy">Already have an account? <a href="" class="logInRedirect">Log In</a></p>
+    </form>
+</div>

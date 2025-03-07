@@ -9,6 +9,7 @@
 }
 html{
     scroll-behavior: smooth;
+    font-size: min(max(12px, 1vw + 1vh), 18px);
 }
 ::-webkit-scrollbar{
     display: none;
@@ -111,6 +112,203 @@ body{
     padding: 6px 7px;
     border-radius: 18px;
     font-size: 1.2rem;
+}
+.profile{
+    height: 3rem;
+    border-radius: 50%;
+    filter: invert(1);
+}
+.accInfo{
+    top: 4rem;
+    width: 15vw;
+    background-color: #161616;
+    padding: 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    gap: 9px;
+    flex-direction: column;
+    right: -15rem;
+    transition: transform 0.3s ease-in-out;
+}
+.username{
+    font-size: 1.1rem;
+    color: gray;
+}
+.fullName{
+    font-weight: 300;
+}
+.moved{
+    transform: translateX(-15rem);
+}
+.accoptions{
+    gap: 25px;
+}
+.accoptions>button{
+    font-size: 1.1rem;
+}
+.accoptions img{
+    height: 1.1rem;
+    filter: invert(1);
+}
+.logoutconf:popover-open{
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    display: flex;
+    padding: 3rem 0rem 3rem 0rem;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    width: 25vw;   
+    height: 20vh;
+    position: relative;
+    background-color: white;
+    border: none;
+    background: linear-gradient(to bottom right,aliceblue,white,white,aliceblue);
+    animation: popOverAnimeOfConf 0.3s cubic-bezier(0, 0.75, 1, 1.26) forwards;
+}
+@keyframes popOverAnimeOfConf{
+    0%{
+        width: 0vw;
+        height: 0vh;
+    }
+    50%{
+        width: 25vw;
+        height: 21vh;
+    }
+    100%{
+        width: 22vw;
+        height: 18vh;
+    }
+}
+.cancel{
+    border: 1px solid gray;
+}
+.confBtns>button{
+    padding: 4px;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 4.2rem;
+}
+/* .confBtns>button:hover{
+    filter: invert(1);
+} */
+.cancel{
+    color: black;
+}
+.okLogout{
+    background-color:  rgb(13, 146, 248);
+    border: none;
+}
+.signUpForm,.logInForm{
+    display: grid;
+    grid-template-rows: auto;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.signUpForm label,.logInForm label,.resetPass label{
+    color: black;
+}
+.signUpForm input,.logInForm input,.resetPass input{
+    padding: 12px;
+    margin:10px 0px;
+    border-radius: 10px;
+    font-size: 16px;
+    color: black;
+    border:2px solid gray ;
+
+}
+.hidePopOver{
+    all: unset;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.crossSvg{
+    height: 15px;
+}
+#signUpPopOver:popover-open,#logInPopOver:popover-open{
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    display: flex;
+    padding: 3rem 0rem 3rem 0rem;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    width: 25vw;   
+    height: 70vh;
+    position: relative;
+    background-color: white;
+    border: none;
+    background: linear-gradient(to bottom right,aliceblue,white,white,aliceblue);
+    animation: popOverAnime 0.3s cubic-bezier(0, 0.75, 1, 1.26) forwards;
+}
+.disableBg{
+    pointer-events: none;
+}
+@keyframes popOverAnime{
+    0%{
+        width: 0vw;
+        height: 0vh;
+    }
+    50%{
+        width: 28vw;
+        /* height:80vh; */
+    }
+    100%{
+        width: 25vw;
+        height: fit-content;
+    }
+}
+.signUpSubmitBtn,.logInSubmitBtn,.updatePass{
+    background-color: rgb(13, 146, 248);
+    width: fit-content;
+    padding: 8px;
+    margin: 40px 0px;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+
+}
+.sendOtp,.verifyOtp{
+    background-color: rgb(13, 146, 248);
+    width: fit-content;
+    padding: 8px;
+    margin: 10px 0px;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+
+}
+.logInIfAldy,.signUpIfDont{
+    color: black;
+}
+.logInRedirect,.signUpRedirect{
+    color:rgb(0, 136, 255);
+    text-decoration: none;
+}
+.forgotPass{
+    bottom: -15px;
+    right: 0px;
+}
+.resetPass:popover-open{
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    display: flex;
+    padding: 3rem 0rem 3rem 0rem;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    width: 25vw;   
+    height: 70vh;
+    position: relative;
+    background-color: white;
+    border: none;
+    background: linear-gradient(to bottom right,aliceblue,white,white,aliceblue);
+    animation: popOverAnime 0.3s cubic-bezier(0, 0.75, 1, 1.26) forwards;
 }
 .signup{
     background-color: white;

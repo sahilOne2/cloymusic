@@ -1,0 +1,24 @@
+<div popover backdrop id="resetPass" class="resetPass">
+    <button type="button" popovertarget="resetPass" popoveraction="hide" class="hidePopOver"><img src="/svgs/cross.svg" class="crossSvg" alt=""></button>
+
+    <form action="index.ejs" class="passwordResetForm">
+        <section class="emailVerificationSection flex column">
+            <label for="emailForReset">Email</label>
+            <input type="text" placeholder="Enter regisetered email" class="registeredEmail" id="emailForReset">
+            <button type="button" class="sendOtp">Send Otp</button>
+            <input type="text" placeholder="Enter Otp" class="otpInput noDisplay">
+            <button type="button" class="noDisplay verifyOtp">Verify</button>
+        </section>
+        <section class="noDisplay passResetSection">
+            <div class="flex column">
+                <label for="newPass">New Password</label>
+                <input type="password" placeholder="Enter new password" autocomplete="new-password" id="newPass" class="newPassInp">
+            </div>
+            <div class="flex column">
+                <label for="confNewPass">Confirm Password</label>
+                <input type="password" placeholder="Enter same as above" autocomplete="new-password" class="confNewPassInp" id="confNewPass">
+            </div>
+            <button type="submit" class="updatePass">Change Password</button>
+        </section>
+    </form>
+</div>

@@ -17,6 +17,12 @@
 .spaceAround{
     justify-content: space-around;
 }
+.flexEnd{
+    justify-content: flex-end;
+}
+.alignEnd{
+    align-items: flex-end;
+}
 .row{
     flex-direction: row;
 }
@@ -71,4 +77,7 @@
 }
 .noOverflow{
     overflow: hidden;
+}
+.noBorder{
+    border: none;
 }

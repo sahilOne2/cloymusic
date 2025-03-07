@@ -1,0 +1,20 @@
+<div popover id="logInPopOver" class="vercenter horcenter">
+    <form action="index.ejs" class="logInForm">
+        <button type="button" popovertarget="logInPopOver" popoveraction="hide" class="hidePopOver"><img src="/svgs/cross.svg" class="crossSvg" alt=""></button>
+        <section class="flex column">    
+            <label>Username</label>
+            <input type="text" placeholder= "Enter your Username" class="logInUname" autocomplete="new-password" required >
+        </section>
+        <section class="flex column relative">
+            <label>Password</label>
+            <div class="flex column">
+            <input type="password" placeholder= "Enter a password" class="logInPass" autocomplete="new-password" >
+            <button popovertarget="resetPass" type="button" class="forgotPass absolute noBackground noBorder" style="color:  rgb(13, 146, 248);">Forgot Password?</button>
+            </div>
+        </section>
+        <section class="flex column">
+           <button type="submit" class="logInSubmitBtn">Log In</button>
+           <p class="signUpIfDont">Don't have an account? <a href="" class="signUpRedirect">Sign Up</a></p>
+        </section>
+    </form>
+</div>
