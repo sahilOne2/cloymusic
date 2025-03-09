@@ -91,14 +91,20 @@ export async function login(formId,userFullName,currentUserName,loginBtn,signupB
 
 }
 
-export async function logout(formId,userFullName,currentUserName,loginBtn,signupBtn,account,API_URL){
-   const logoutConfPopover= document.querySelector(formId)
+export async function logout(formId,userFullName,currentUserName,loginBtn,signupBtn,account,API_URL,currentSong,setPlayerName,songSources,songList){
+   const logoutConfPopover= document.getElementById(formId)
     const response =await fetch(`${API_URL}/auth/logout`,{
         method:"POST"
     })
     const result = await response.json()
     console.log(result);
     if(result.message === "Logged out successfully."){
+        if(!currentSong[0].paused){
+            currentSong[0].pause()
+        }
+        currentSong[0].currentTime = 0
+        currentSong[0] = ""
+        setPlayerName("",songSources,songList)
         logoutConfPopover.hidePopover()
         userFullName.innerHTML = ""
         currentUserName.innerHTML = ""

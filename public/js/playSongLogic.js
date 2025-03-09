@@ -13,7 +13,7 @@ export function playSong(queueSongNames, nextSongs, audioArray, currentSong, all
         const element = allCards[index];
         console.log(element);
         element.addEventListener("click", () => {
-            if(!loggedIn){
+            if(!loggedIn.value){
                 alert("Login First.")
                 return;
             }

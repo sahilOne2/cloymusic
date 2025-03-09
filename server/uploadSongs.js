@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config()
+import mm from "music-metadata"
 import fs, { readdirSync} from "fs";
 import path from "path";
 import {Song} from "./models/songModel.js"
@@ -47,6 +50,7 @@ const uploadSongs = async ()=>{
         const response = await axios.get(url,{
             headers: { 'User-Agent': 'cloymusic/1.0 (gautamsahil8376@gmail.com)' }
         });
+        
         if (!response.data.recordings || response.data.recordings.length === 0) {
             console.log(`⚠️ No metadata found for: ${trackName}`);
             continue; // Skip this song

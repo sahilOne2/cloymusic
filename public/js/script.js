@@ -1,3 +1,4 @@
+
 import {signup,login,logout,sendOtp,verifyOtp,changePass} from "./authRequests.js"
 import { playSong } from "./playSongLogic.js"
 
@@ -7,7 +8,9 @@ let signupBtn = document.querySelector(".signup")
 let account= document.querySelector(".account")
 let userFullName = account.querySelector(".fullName")
 let currentUserName = account.querySelector(".username")
-let loggedIn = false
+let loggedIn = {
+    value:false
+}
 document.addEventListener('DOMContentLoaded', async () => {
     // Removes any previous session data stored in localStorage
     const response = await fetch (`${API_URL}/auth/check-session`,{credentials:"include"})
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         account.classList.remove("noDisplay")
         userFullName.innerHTML = result.user.fullName
         currentUserName.innerHTML = "@" + result.user.username
-        loggedIn = true
+        loggedIn.value = true
     }
     console.log("deleting");
 
@@ -35,14 +38,18 @@ const API_URL = "http://localhost:3000"
 function setPlayerName(nextSong,songSources,songList) {  //Sets the name of the song currently being played in the player
     let nextSongEdited = nextSong.slice(nextSong.indexOf("3000") + 4)
     console.log("running", nextSongEdited);
+    let playerSongName = document.querySelector(".nameIs")
     for (let index = 0; index < songSources.length; index++) {
         const element = songSources[index];
 
-        if (nextSongEdited === element) {
-            let playerSongName = document.querySelector(".nameIs")
+        if (nextSongEdited === element) {    
             console.log(playerSongName);
             const nameToSet = songList[index]
             playerSongName.innerHTML = nameToSet.slice(0,nameToSet.indexOf(" ["))
+            break;
+        }
+        else{
+            playerSongName.innerHTML = ""
         }
     }
 }
@@ -682,17 +689,19 @@ async function main() {
     document.querySelector(".signUpForm").addEventListener('submit',async (e)=>{
         e.preventDefault();
         signup("signUpPopOver",userFullName,currentUserName,loginBtn,signupBtn,account,API_URL)
-        loggedIn = true
+        loggedIn.value = true
     })
     document.querySelector(".logInForm").addEventListener("submit", async (e) => {
         e.preventDefault()
         login("logInPopOver",userFullName,currentUserName,loginBtn,signupBtn,account,API_URL)
-        loggedIn = true   
+        loggedIn.value = true
+        console.log(loggedIn);
+        
     })
     document.querySelector(".logoutForm").addEventListener("submit", async (e) => {
         e.preventDefault()
-        logout("logoutConfPopOver",userFullName,currentUserName,loginBtn,signupBtn,account,API_URL)
-        loggedIn = false
+        logout("logoutConfPopOver",userFullName,currentUserName,loginBtn,signupBtn,account,API_URL,currentSong,setPlayerName,songSources,songList)
+        loggedIn.value = false
     })
     const resetPassPopover= document.querySelector(".resetPass")
     const otpSendingBtn = document.querySelector(".sendOtp")

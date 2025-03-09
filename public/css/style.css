@@ -150,7 +150,7 @@ body{
     height: 1.1rem;
     filter: invert(1);
 }
-.logoutconf:popover-open{
+#logoutConfPopOver:popover-open{
     backdrop-filter: blur(10px);
     border-radius: 10px;
     display: flex;
