@@ -7,6 +7,7 @@ import fs from "fs"
 import router from "./routes/authRoutes.js"
 import cookieParser from "cookie-parser";
 import cors from "cors"
+import plistRouter from "./routes/playlistRoutes.js";
 
 console.log(process.env.MONGO_URI);
 
@@ -25,13 +26,29 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(cors({origin:"http://localhost:3000",credentials:true}))
 
-const SECRET_KEY = process.env.SECRET_KEY || "default-key"
-
 app.get("/",(req,res)=>{
-    setTimeout(() => {
-        app.get("/Songs")
-    }, 1000);
     res.render("index")
+})
+app.get("/about",(req,res)=>{
+    res.render("about")
+})
+app.get("/for-the-record",(req,res)=>{
+    res.render("forTheRecord")
+})
+app.get("/developers",(req,res)=>{
+    res.render("developers")
+})
+app.get("/premium-individual-plan",(req,res)=>{
+    res.render("premiumIndividual")
+})
+app.get("/premium-family-plan",(req,res)=>{
+    res.render("premiumFamily")
+})
+app.get("/terms-of-use",(req,res)=>{
+    res.render("termsOfUse")
+})
+app.get("/privacy-policy",(req,res)=>{
+    res.render("privacyPolicy")
 })
 app.get("/songs",(req,res)=>{
     const songsDir = path.join(dirName,"../public","Songs")
@@ -103,8 +120,16 @@ app.get("/get-cards", (req, res) => {
         console.error("Could not render",err);
     }
 });
+app.get("/playlist-cards",(req,res)=>{
+    try{
+        const playlistCard = "components/userPlaylistCard"
+        res.render(playlistCard)
+    }catch(err){
+        console.error("Error gettng playlist card",err)
+    }
+})
 app.use("/auth",router)
-
+app.use("/plist",plistRouter)
 app.listen(port,()=>{
     console.log("Running server on port 3000.");
     

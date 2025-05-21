@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
 const playlist = new mongoose.Schema({
-    name: String,
-    genre: String,
+    user: {type:mongoose.Schema.Types.ObjectId,
+        ref: 'User',required:true},
+    name: {type:String,required:true},
+    desc: {type:String,required:true},
     songs: Array
 })
 

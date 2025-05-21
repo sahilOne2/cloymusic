@@ -59,7 +59,7 @@ router.post("/login", async (req,res) =>{
 })
 
 router.get("/check-session",verifyToken,(req,res) => {
-  res.status(201).json({loggedIn:true,user:{username:req.user.userName,fullName:req.user.fullName}})
+  res.status(201).json({loggedIn:true,user:{username:req.user.userName,fullName:req.user.fullName }})
 })
 
 router.post("/logout",(req,res) => {

@@ -6,9 +6,11 @@ export function playSong(queueSongNames, nextSongs, audioArray, currentSong, all
     for (let index = 0; index < allCards.length; index++) {
         const cards = allCards[index];
         let trackElement = cards.querySelector(".songSource").innerHTML
-        let rawTrackElement = trackElement.replaceAll(" ", "%20")
+        let rawTrackElement = encodeURIComponent(trackElement)
         queueSongNames.push(rawTrackElement)
     }
+
+    // Finds out the song which was clicked and then plays it and handles its execution.
     for (let index = 0; index < allCards.length; index++) {
         const element = allCards[index];
         console.log(element);
@@ -16,7 +18,7 @@ export function playSong(queueSongNames, nextSongs, audioArray, currentSong, all
             if(!loggedIn.value){
                 alert("Login First.")
                 return;
-            }
+            } 
             if (nextSongs.length > 0) {
                 nextSongs.length = 0
             }
@@ -34,10 +36,9 @@ export function playSong(queueSongNames, nextSongs, audioArray, currentSong, all
             }
             console.log(nextSongs);
             let songElement = element.querySelector(".songSource").innerHTML
-            let rawSongElement = songElement.replaceAll(" ", "%20")
+            let rawSongElement = encodeURIComponent(songElement)
             if (currentSong.length > 0) {
                 if (!currentSong[0].paused) {
-                    console.log(currentSong[0].src + "This is current song");
                     currentSong[0].pause()
                     currentSong.pop()
                     audioArray.length = 0
@@ -56,11 +57,6 @@ export function playSong(queueSongNames, nextSongs, audioArray, currentSong, all
                 let audio = new Audio(songPicked)
                 audioArray.push(audio)
             }
-            for (const audio of audioArray) {
-                console.log(audio.src);
-
-            }
-            console.log(audioArray);
             for (let index = 0; index < audioArray.length; index++) {
                 try {
                     let audioToPlay = audioArray[index];
@@ -71,13 +67,7 @@ export function playSong(queueSongNames, nextSongs, audioArray, currentSong, all
                         setPlayerName(currentSong[0].src, songSources, songList)
                         setMusicIcon(aapWindow)
                         localStorage.setItem("cardClicked", element.querySelector(".songSource").innerHTML)
-                        if (!currentSong[0].paused) {
-                            setInterval(() => {
-                                localStorage.setItem('audioVolume', currentSong[0].volume)
-                                localStorage.setItem('audioCurrentTime', currentSong[0].currentTime)
-                                localStorage.setItem('audioPaused', currentSong[0].paused)
-                            }, 100);
-                        }
+                        
                         console.log(currentSong[0] + "This is current song");
 
                         if (playPauseSvg.src.includes('/svgs/plays.svg')) {

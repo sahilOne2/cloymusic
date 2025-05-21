@@ -1,4 +1,4 @@
-<div popover id="signUpPopOver" class="signUpPopOver vercenter horcenter">
+<div popover id="signUpPopOver" class="column signUpPopOver ">
     <form action="index.ejs" name="signUp" class="signUpForm">
         <button type="button" popovertarget="signUpPopOver" popoveraction="hide" class="hidePopOver"><img src="/svgs/cross.svg" class="crossSvg" alt=""></button>
         <section class="flex column">    
@@ -22,6 +22,7 @@
             <input type="password" placeholder= "Enter same as above" class="confirmSignUpPass" minlength="8" autocomplete="new-password" required >
         </section>
         <button type="submit" class="signUpSubmitBtn">Sign Up</button>
-        <p class="logInIfAldy">Already have an account? <a href="" class="logInRedirect">Log In</a></p>
     </form>
+    <p class="logInIfAldy">Already have an account? <button popovertarget= "logInPopOver" class="popOverRedirect noBackground noBorder">Log In</button></p>
+
 </div>

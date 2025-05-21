@@ -13,12 +13,13 @@
     <link rel="stylesheet" type="text/css" href="/css/utility.css">
     <title>cloyumusic</title>
 </head>
-
-<body>
+<body id = "body">
+    <div class="overlay"></div>
     <%- include("logoutconf") %>
     <%- include("signUp") %>
     <%- include("logIn") %>
     <%- include("resetPass") %>
+ 
     <div class="scbvr flex column vercenter">
         <!-- header of the document -->
         <header class="strfpg">
@@ -36,11 +37,9 @@
                             <button class="searchbutton flex row vercenter"><img src="/svgs/search.svg" alt="search"
                                     class="searchSvg"></button>
                             <input type="text" placeholder="Search for music" class="searchInput flex row horcenter">
-
-                            <button class="browsebutton flex row vercenter"><img src="/svgs/browse.svg" alt=""
-                                    class="browseSvg"></button>
                         </div>
                     </form>
+                    <%- include("searchResult") %>
                 </div>
                 <div class="logsign top flex row vercenter absolute noRight">
                     <button popovertarget="signUpPopOver" class="signup">Sign Up</button>
@@ -52,65 +51,38 @@
             </nav>
         </header>
         <!-- Main section of the document -->
-        <main class="mainSection">
+        <main class="mainSection" tabindex="0">
             <div class="main grid relative">
+                <%- include("userPlaylists") %>
+                <%- include("playlistView") %>
+                <%- include("createPlaylist") %>
+
                 <!-- Library of website -->
                 <div class="library radius ">
                     <div class="libhead flex row vercenter">
                         <button class="librarybutton"><img src="/svgs/library.svg" alt="" class="libsvg"></button>
                         <span class="ylib">&nbsp;&nbsp;Your library</span>
-                        <button class="moreOptions radius noFunction">
-                            <span class="more">+</span>
-                        </button>
                     </div>
                     <div class="playpod flex column">
                         <div class="playlistCreation part">
                             <p class="createPlaylist create">Create your first playlist</p>
                             <p class="exp">It's easy, we'll help you</p>
-                            <div class="play partB"><button class="playbutton buttonpart noFunction">
+                            <div class="play partB"><button popovertarget="logInPopOver" class="playbutton buttonpart noFunction">
                                     <p class="inbutton">Create playlist</p>
                                 </button></div>
                         </div>
-
-                        <div class="podcast part">
-                            <p class="findPodcast create">Let's find some Podcasts to follow</p>
-
-                            <p class="exp">We'll keep you updated on new episodes</p>
-
-                            <div class="pod partB">
-                                <button class="podbutton buttonpart noFunction">
-                                    <p class="inbutton">Browse podcasts</p>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footOptions">
-                        <ul class="options flex row">
-                            <li><a href="" class="ac1">
-                                    <p>legal</p>
-                                </a> </li>
-                            <li><a href="" class="ac2">
-                                    <p>Safety & Center</p>
-                                </a></li>
-                            <li><a href="" class="ac3">
-                                    <p>Privacy Policy</p>
-                                </a></li>
-                            <li><a href="" class="ac4">
-                                    <p>Cookies</p>
-                                </a></li>
-                            <li><a href="" class="ac5">
-                                    <p>About Ads</p>
-                                </a></li>
-                            <li><a href="" class="ac6">
-                                    <p>Accessibility</p>
-                                </a></li>
-                        </ul>
-                    </div>
+                  </div>
+                  <div class="libraryFooter">
+                    <ul class="libraryFooterList flex row vercenter gap">
+                        <li class="libraryFooterListItem"><a href="/terms-of-use" class="terms">Terms of Use</a></li>
+                        <li class="libraryFooterListItem"><a href="/privacy-policy" class="privacy">Privacy Policy</a></li>
+                    </ul>
+                  </div>
                 </div>
 
                 <!-- musicSection of the site  -->
                 <div class="musicSection radius relative">
-
+                       <%- include ("addToPlistView") %>
                     <!-- player -->
                     <div class="player flex column fixed horcenter vercenter radius">
                         <div class="flex row spaceBetween fullWidth vercenter">
@@ -236,17 +208,12 @@
 
                                     </li>
                                     <li class="firstOption">
-                                        <a href="" class="first">
+                                        <a href="/about" target="_blank" class="first">
                                             <p class="first">About</p>
                                         </a>
                                     </li>
-                                    <li class="secondOption">
-                                        <a href="" class="second">
-                                            <p class="second">Jobs</p>
-                                        </a>
-                                    </li>
                                     <li class="thirdOption">
-                                        <a href="" class="third">
+                                        <a href="/for-the-record" target="_blank" class="third">
                                             <p class="third">For the record</p>
                                         </a>
                                     </li>
@@ -258,18 +225,8 @@
                                         <p class="head">Communities</p>
                                     </li>
                                     <li class="firstOption">
-                                        <a href="" class="first">
+                                        <a href="/developers" target="_blank" class="first">
                                             <p class="first">Developers</p>
-                                        </a>
-                                    </li>
-                                    <li class="secondOption">
-                                        <a href="" class="second">
-                                            <p class="second">Advertising</p>
-                                        </a>
-                                    </li>
-                                    <li class="thirdOption">
-                                        <a href="" class="third">
-                                            <p class="third">Investors</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -281,29 +238,24 @@
 
                                     </li>
                                     <li class="firstOption">
-                                        <a href="" class="first">
+                                        <a href="/premium-individual-plan" target="_blank" class="first">
                                             <p class="first">Premium Individual</p>
                                         </a>
                                     </li>
                                     <li class="secondOption">
-                                        <a href="" class="second">
+                                        <a href="/premium-family-plan" target="_blank" class="second">
                                             <p class="second">Premium Family</p>
-                                        </a>
-                                    </li>
-                                    <li class="thirdOption">
-                                        <a href="" class="third">
-                                            <p class="third">Premium Student</p>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="socialMediaHandles flex row horcenter ">
-                                <div class="fb"><button class="fbButton socialButton"><img src="/svgs/fb.svg" alt=""
-                                            class="fbSvg"></button></div>
-                                <div class="insta"><button class="instaButton socialButton"><img src="/svgs/insta.svg"
-                                            alt="" class="instaSvg"></button></div>
-                                <div class="x"><button class="xButton socialButton"><img src="/svgs/x.svg" alt=""
-                                            class="xSvg"></button></div>
+                                <div class="fb"><a href="https://www.facebook.com/profile.php?id=61575369860387" target="_blank" class="fbButton socialButton"><img src="/svgs/fb.svg" alt=""
+                                            class="fbSvg"></a></div>
+                                <div class="insta"><a href="https://www.instagram.com/cloymusic01/" target="_blank" class="instaButton socialButton"><img src="/svgs/insta.svg"
+                                            alt="" class="instaSvg"></a></div>
+                                <div class="x"><a href="https://x.com/cloymusic01" target="_blank" class="xButton socialButton"><img src="/svgs/x.svg" alt=""
+                                            class="xSvg"></a></div>
 
                             </div>
                         </div>
@@ -312,7 +264,7 @@
                         </div>
                     </footer>
                     <div class="copyright">
-                        <p><a href="" class="copyrightInfo">&copy2024 Cloymusic</a></p>
+                        <p><a href="#" class="copyrightInfo">&copy2025 Cloymusic</a></p>
                     </div>
                 </div>
             </div>

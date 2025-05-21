@@ -2,6 +2,24 @@
 .flex{
     display: flex;
 }
+.black{
+    color: #000000;
+}
+.white{
+    color: #ffffff;
+}
+.blackBg{
+    background-color: #000000;
+}
+.fitHeight{
+    height: fit-content;
+}
+.fitWidth{
+    width: fit-content;
+}
+.whiteBg{
+    background-color: #ffffff;
+}
 .vercenter{
     align-items: center;
 }
@@ -51,6 +69,9 @@
 .fullWidth{
     width: 100%;
 }
+.fullHeight{
+    height: 100%;
+}
 .noDisplay{
     display: none;
 }
@@ -74,6 +95,12 @@
 }
 .noRight{
     right: 10px;
+}
+.noTop{
+    top: 10px;
+}
+.noBottom{
+    bottom: 10px;
 }
 .noOverflow{
     overflow: hidden;

@@ -1,4 +1,4 @@
-<div popover id="logInPopOver" class="vercenter horcenter">
+<div popover id="logInPopOver" class="column logInPopOver">
     <form action="index.ejs" class="logInForm">
         <button type="button" popovertarget="logInPopOver" popoveraction="hide" class="hidePopOver"><img src="/svgs/cross.svg" class="crossSvg" alt=""></button>
         <section class="flex column">    
@@ -14,7 +14,10 @@
         </section>
         <section class="flex column">
            <button type="submit" class="logInSubmitBtn">Log In</button>
-           <p class="signUpIfDont">Don't have an account? <a href="" class="signUpRedirect">Sign Up</a></p>
         </section>
+
     </form>
+    <p class="signUpIfDont">Don't have an account? <button type="reset" popovertarget="signUpPopOver" class="popOverRedirect noBackground noBorder">Sign Up</a></p>
+
+
 </div>

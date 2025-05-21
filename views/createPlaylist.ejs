@@ -1,0 +1,19 @@
+<div class="plistCreate absolute  flex radius noDisplay horcenter">
+    <form action="index.ejs" class="playlistForm flex column gap ">
+        <h1>Create a Playlist</h1>
+        <label for="playlistName">Playlist Name:</label>
+        <input type="text" placeholder="Enter a name for the playlist" name="playlistName" id="playlistName" name="playlistName" required>
+
+        <label for="playlistDescription">Description:</label>
+        <textarea id="playlistDescription" placeholder="Description" name="playlistDescription" rows="4" required></textarea>
+        
+        <div class="plistFormBtns relative fullWidth">
+            <div style="bottom: -3rem;" class="flex row gap noBottom noRight absolute">
+            <button type="submit" class="plistSubmit whiteBg black">Create Playlist</button>
+            <button type="button" class="plistCancel noBackground white"
+                >Cancel</button>
+        
+            </div>
+        </div>
+    </form>
+</div> 

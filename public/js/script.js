@@ -1,26 +1,44 @@
 
-import {signup,login,logout,sendOtp,verifyOtp,changePass} from "./authRequests.js"
+import { signup, login, logout, sendOtp, verifyOtp, changePass } from "./authRequests.js"
 import { playSong } from "./playSongLogic.js"
-
+import { basicPlaylistCtrls } from "./userplaylistLogics.js"
+import { searchLogic } from "./searchScript.js"
+import { popOverRedirects } from "./popOverRedirects.js"
+import { scrollMangagement } from "./scrollManagement.js"
+import { artistsMangaement, albumManagement, playlistManagement } from "./aapWindowManagement.js"
+import { prevNextCtrls } from "./playerControls.js"
+import { userPlaylistManagement } from "./playlistReqs.js"
+import { addsongToPlist } from "./addSongToPlist.js"
 //Page Initialization:
 let loginBtn = document.querySelector(".login")
 let signupBtn = document.querySelector(".signup")
-let account= document.querySelector(".account")
+let account = document.querySelector(".account")
 let userFullName = account.querySelector(".fullName")
 let currentUserName = account.querySelector(".username")
 let loggedIn = {
-    value:false
+    value: false
 }
+const library = document.querySelector(".library")
+const musicSection = document.querySelector(".musicSection")
+const aapWindow = document.querySelector(".aapInfo")
+
 document.addEventListener('DOMContentLoaded', async () => {
     // Removes any previous session data stored in localStorage
-    const response = await fetch (`${API_URL}/auth/check-session`,{credentials:"include"})
+    const response = await fetch(`${API_URL}/auth/check-session`, { credentials: "include" })
     const result = await response.json();
-    if(!result.loggedIn){
+    if (!result.loggedIn) {
         console.log("Not logged In");
     }
-    else{
+    else {
         console.log(result);
-        
+
+        library.classList.add("noDisplay")
+        aapWindow.style.right = 'unset'
+        aapWindow.style.width = '75vw'
+        musicSection.style.right = 'unset'
+        musicSection.style.width = '100vw'
+        musicSection.style.padding = '0px 12.5vw'
+        musicSection.style.background = 'linear-gradient(to right, rgb(6 8 7), rgb(34, 34, 34), rgb(17, 17, 17), rgb(10, 10, 10), rgb(17, 17, 17), rgb(34, 34, 34), rgb(6,8,7))'
         loginBtn.classList.add("noDisplay")
         signupBtn.classList.add("noDisplay")
         account.classList.remove("noDisplay")
@@ -35,20 +53,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 const API_URL = "http://localhost:3000"
 //Important function:
-function setPlayerName(nextSong,songSources,songList) {  //Sets the name of the song currently being played in the player
+function setPlayerName(nextSong, songSources, songList) {  //Sets the name of the song currently being played in the player
     let nextSongEdited = nextSong.slice(nextSong.indexOf("3000") + 4)
     console.log("running", nextSongEdited);
     let playerSongName = document.querySelector(".nameIs")
     for (let index = 0; index < songSources.length; index++) {
         const element = songSources[index];
 
-        if (nextSongEdited === element) {    
+        if (nextSongEdited === element) {
             console.log(playerSongName);
             const nameToSet = songList[index]
-            playerSongName.innerHTML = nameToSet.slice(0,nameToSet.indexOf(" ["))
+            playerSongName.innerHTML = nameToSet.slice(0, nameToSet.indexOf(" ["))
             break;
         }
-        else{
+        else {
             playerSongName.innerHTML = ""
         }
     }
@@ -56,7 +74,6 @@ function setPlayerName(nextSong,songSources,songList) {  //Sets the name of the 
 
 // Function to set the icon of music on the card of song currently being played dynamically
 function setMusicIcon(aapWindow) {
-    console.log("executing");
     let playerName = document.querySelector(".nameIs").innerHTML
     let songInPlayer = playerName.slice(0, playerName.indexOf(" -"))
     if (aapWindow.classList.contains("flex")) {
@@ -79,7 +96,7 @@ function setMusicIcon(aapWindow) {
     }
 }
 
-async function openAap(rawName,aapWindow,songSources,songList) { //Adds the songs of clicked artst album or playlist in the aapWindow area
+async function openAap(rawName, aapWindow, songSources, songList) { //Adds the songs of clicked artst album or playlist in the aapWindow area
     let card = document.createElement("div")
     const response = await fetch(`${API_URL}/get-cards`)
     const result = await response.text()
@@ -95,17 +112,22 @@ async function openAap(rawName,aapWindow,songSources,songList) { //Adds the song
         }
     }
     let currentCards = document.querySelectorAll(".card")
-    console.log(currentCards);
-    if (localStorage.getItem("cardClicked") != null) {
-        console.log("working on it");
-        for (let index = 0; index < currentCards.length; index++) {
-            const element = currentCards[index];
-            if (localStorage.getItem("cardClicked") == element.querySelector(".songSource").innerHTML) {
-                console.log("job done");
-                element.querySelector(".currentSongCard").src = "/svgs/cardAnime.svg"
-            }
+    for (let index = 0; index < currentCards.length; index++) {
+        const element = currentCards[index];
+        if (localStorage.getItem("cardClicked") != null && localStorage.getItem("cardClicked") == element.querySelector(".songSource").innerHTML) {
+            element.querySelector(".currentSongCard").src = "/svgs/cardAnime.svg"
         }
+        const songCardMenu = element.querySelector(".songCardMenu")
+        console.log(element);
+
+        songCardMenu.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            element.querySelector('.songOptions').classList.toggle('noDisplay');
+        })
     }
+    addsongToPlist()
+    
 }
 
 /**
@@ -141,7 +163,7 @@ async function getAlbumBgs() {
  * @returns {Promise<Array>} - An array of playlist background image URLs.
  */
 async function getPlaylistBgs() {
-    let playlistBgFetched = await fetch("/Playlists/")
+    let playlistBgFetched = await fetch("/Playlists")
     let response = await playlistBgFetched.json()
     return response
 }
@@ -155,12 +177,14 @@ async function main() {
     let currentSong = []
     let audioArray = []
     let aapWindow = document.querySelector(".aapInfo")
-    let musicSection = document.querySelector(".musicSection")
     let playPauseBtn = document.querySelector('.playPause')
     let playPauseSvg = playPauseBtn.querySelector('.playPauseSvg')
 
+    basicPlaylistCtrls(API_URL)
+    popOverRedirects()
+    scrollMangagement()
+    userPlaylistManagement(API_URL)
     let songSources = await getSongs()
-    console.log(songSources)
 
     // Getting the Name of songs with their Artist Names:
     let songList = []
@@ -172,42 +196,41 @@ async function main() {
         songList.push(songTitle)
     }
     console.log(songList);
-
-    //Getting the Name of Artists
+    searchLogic(songSources, API_URL, queueSongNames, nextSongs, audioArray, currentSong, songList, playPauseSvg, setPlayerName, musicSection)
     let artistNames = document.querySelectorAll('.artistname')
     let index = 0
     let realArtistNames = []
     artistNames.forEach(name => {
         let nameSliceIndex = songList[index].indexOf("- ")
-        realArtistNames.push(songList[index].slice(nameSliceIndex + 2,songList[index].indexOf(" [")))
+        realArtistNames.push(songList[index].slice(nameSliceIndex + 2, songList[index].indexOf(" [")))
         name.innerHTML = realArtistNames[index]
         index += 1
     });
     console.log(realArtistNames);
 
-    let bgs = await getArtistBgs()
-    console.log(bgs);
+    let artistBgs = await getArtistBgs()
+    console.log(artistBgs);
 
     //Setting the name for the artist section cards
     let bgNameList = []
-    for (let i = 0; i < bgs.length; i++) {
-        let bgSliceStart = bgs[i].indexOf("s/")
-        let bgSliceEnd = bgs[i].indexOf(".j")
-        let bgRawTitle = bgs[i].slice(bgSliceStart + 2, bgSliceEnd)
-        let bgTitle = bgRawTitle.replaceAll("%20", " ")
+    for (let i = 0; i < artistBgs.length; i++) {
+        let bgSliceStart = artistBgs[i].indexOf("s/")
+        let bgSliceEnd = artistBgs[i].indexOf(".j")
+        let bgRawTitle = artistBgs[i].slice(bgSliceStart + 2, bgSliceEnd)
+        let bgTitle = decodeURIComponent(bgRawTitle)
         bgNameList.push(bgTitle)
     }
 
     console.log(bgNameList);
 
     //Setting the background for the aritsts
-    let artistbackgrounds = document.querySelectorAll(".artistbg")
+    let artistBackgrounds = document.querySelectorAll(".artistbg")
     let index2 = 0
-    artistbackgrounds.forEach(bg => {
+    artistBackgrounds.forEach(bg => {
         let j = 0
         for (const bgName of bgNameList) {
             if (bgName == realArtistNames[index2]) {
-                bg.style.background = `url(${bgs[j]})`
+                bg.style.background = `url(${artistBgs[j]})`
                 bg.style.backgroundSize = "cover"
                 break;
             }
@@ -216,13 +239,13 @@ async function main() {
         index2++;
     })
 
-    let ablumBackgrounds = await getAlbumBgs()
-    console.log(ablumBackgrounds);
+    let albumBgs = await getAlbumBgs()
+    console.log(albumBgs);
 
     //Setting the name of the cards in Album Section
     let albumNames = document.querySelectorAll(".albumname")
     let albumTitles = []
-    for (const name of ablumBackgrounds) {
+    for (const name of albumBgs) {
         let nameSliceStart = name.indexOf('ms/')
         let nameSliceEnd = name.indexOf('.j')
         let rawAlbumTitle = name.slice(nameSliceStart + 3, nameSliceEnd)
@@ -238,23 +261,23 @@ async function main() {
     });
 
     //Setting the background image for albums 
-    let abBackgrounds = document.querySelectorAll(".albumbg")
+    let albumBackgrounds = document.querySelectorAll(".albumbg")
     let index4 = 0
-    abBackgrounds.forEach(element => {
-        element.style.background = `url(${ablumBackgrounds[index4]})`
+    albumBackgrounds.forEach(element => {
+        element.style.background = `url(${albumBgs[index4]})`
         element.style.backgroundSize = "cover"
         index4++
     });
 
 
-    let playlistBackgrounds = await getPlaylistBgs()
-    console.log(playlistBackgrounds);
+    let playlistBgs = await getPlaylistBgs()
+    console.log(playlistBgs);
 
     //Setting the backgrounds of the playlists
-    let playlistBackgroundDivs = document.querySelectorAll(".playlistbg")
+    let playlistBackgrounds = document.querySelectorAll(".playlistbg")
     let index5 = 0
-    playlistBackgroundDivs.forEach(element => {
-        element.style.background = `url(${playlistBackgrounds[index5]})`
+    playlistBackgrounds.forEach(element => {
+        element.style.background = `url(${playlistBgs[index5]})`
         element.style.backgroundSize = 'cover'
         index5++
     });
@@ -264,7 +287,7 @@ async function main() {
     let index6 = 0
     for (let i = 0; i < playlistNames.length; i++) {
         const element = playlistNames[i];
-        let name = playlistBackgrounds[i]
+        let name = playlistBgs[i]
         let nameSliceStart = name.indexOf('ts/')
         let nameSliceEnd = name.indexOf('.j')
         let rawPlaylistTitle = name.slice(nameSliceStart + 3, nameSliceEnd)
@@ -286,128 +309,11 @@ async function main() {
         })
     }
     //Opens the aapWindow for the clicked artist, album or playlist:
-    let artists = document.querySelectorAll(".artist")
-    for (let index = 0; index < artists.length; index++) {
-        const element = artists[index];
-        element.addEventListener("click",async (e) => {
-            e.preventDefault()
-            aapWindow.classList.add("flex")
-            aapWindow.classList.add('opaque')
-            musicSection.classList.add("noOverflow")
-            let nameOfArtist = element.querySelector(".artistname").innerHTML
-            let rawNameOfArtist = nameOfArtist.replaceAll(" ", "%20")
-            console.log(nameOfArtist)
-            for (let index = 0; index < bgs.length; index++) {
-                const source = bgs[index];
-                if (source.includes(rawNameOfArtist)) {
-                    aapWindow.querySelector(".aapImage").src = `${source}`
-                    aapWindow.querySelector(".actuTitle").innerHTML = nameOfArtist
-                    break;
-                }
-            }
-            await openAap(rawNameOfArtist, aapWindow,songSources,songList)
-            let allCards = document.querySelectorAll(".card")
-            console.log(allCards);
-            playSong(queueSongNames, nextSongs, audioArray, currentSong, allCards, playPauseSvg, aapWindow, songSources, songList,loggedIn,setMusicIcon,setPlayerName)
-        })
-    }
-    let ablums = document.querySelectorAll(".album")
-    for (let index = 0; index < ablums.length; index++) {
-        const element = ablums[index];
-        element.addEventListener("click",async (e) => {
-            e.preventDefault()
-            aapWindow.classList.add("flex")
-            aapWindow.classList.add('opaque')
-            musicSection.classList.add("noOverflow")
-            let nameOfAlbum = element.querySelector(".albumname").innerHTML
-            let rawNameOfAlbum = nameOfAlbum.replaceAll(" ", "%20")
-            console.log(nameOfAlbum)
-            for (let index = 0; index < ablumBackgrounds.length; index++) {
-                const source = ablumBackgrounds[index];
-                if (source.includes(rawNameOfAlbum)) {
-                    aapWindow.querySelector(".aapImage").src = `${source}`
-                    aapWindow.querySelector(".actuTitle").innerHTML = nameOfAlbum
-                    break;
-                }
-            }
-            await openAap(rawNameOfAlbum, aapWindow, songSources,songList)
-            let allCards = document.querySelectorAll(".card")
-            console.log(allCards);
-            playSong(queueSongNames, nextSongs, audioArray, currentSong, allCards, playPauseSvg, aapWindow, songSources, songList,loggedIn,setMusicIcon,setPlayerName)
-        })
-    }
-    let playlists = document.querySelectorAll(".playlist")
-    for (let index = 0; index < playlists.length; index++) {
-        const element = playlists[index];
-        element.addEventListener("click",async (e) => {
-            e.preventDefault()
-            aapWindow.classList.add("flex")
-            aapWindow.classList.add('opaque')
-            musicSection.classList.add("noOverflow")
-            let nameOfPlaylist = element.querySelector(".playlistname").innerHTML
-            let rawNameOfPlaylist = nameOfPlaylist.replaceAll(" ", "%20")
-            console.log(nameOfPlaylist)
-            for (let index = 0; index < playlistBackgrounds.length; index++) {
-                const source = playlistBackgrounds[index];
-                if (source.includes(rawNameOfPlaylist)) {
-                    aapWindow.querySelector(".aapImage").src = `${source}`
-                    aapWindow.querySelector(".actuTitle").innerHTML = nameOfPlaylist
-                    break;
-                }
-            }
+    artistsMangaement(artistBgs, queueSongNames, nextSongs, audioArray, currentSong, playPauseSvg, aapWindow, songSources, songList, loggedIn, setMusicIcon, setPlayerName, musicSection, playSong, openAap)
 
-            //Saperately creating the code of openAap function for the playlists due to naming complexities: 
-            let card = document.createElement("div")
-            const response = await fetch(`${API_URL}/get-cards`)
-            const result = await response.text()
-            card.innerHTML = result
-            console.log(card);
-            const substrings = new Set()
-            let hasIt = false
-            for (let index = 0; index < songSources.length; index++) {
-                const element = songSources[index];
-                const realName = element.replaceAll("%20", " ")
-                let minLength = 6
-                for (let length = minLength; length <= nameOfPlaylist.length; length++) {
-                    for (let i = 0; i <= nameOfPlaylist.length - length; i++) {
-                        const substring = nameOfPlaylist.substring(i, i + minLength)
-                        substrings.add(substring)
-                    }
-                }
-                for (let length = minLength; length <= realName.length; length++) {
-                    for (let i = 0; i <= realName.length - length; i++) {
-                        const substring1 = realName.substring(i, i + minLength)
-                        if (substrings.has(substring1)) {
-                            let insertedCard = card.querySelector(".card")
-                            insertedCard.querySelector(".songSource").innerHTML = `${songList[index].slice(0, songList[index].indexOf(" -"))}`
-                            aapWindow.querySelector(".songsList").insertAdjacentHTML('beforeend', insertedCard.outerHTML)
-                            console.log(insertedCard);
-                            hasIt = true
-                            break;
-                        }
-                    }
-                    if (hasIt) {
-                        break;
-                    }
-                }
-                let currentCards = document.querySelectorAll(".card")
-                console.log(currentCards);
-                if (localStorage.getItem("cardClicked") != null) {
-                    console.log("working on it");
-                    for (let index = 0; index < currentCards.length; index++) {
-                        const element = currentCards[index];
-                        if (localStorage.getItem("cardClicked") == element.querySelector(".songSource").innerHTML) {
-                            element.querySelector(".currentSongCard").src = "/svgs/cardAnime.svg"
-                        }
-                    }
-                }
-            }
-            let allCards = document.querySelectorAll(".card")
-            console.log(allCards);
-            playSong(queueSongNames, nextSongs, audioArray, currentSong, allCards, playPauseSvg, aapWindow, songSources, songList,loggedIn,setMusicIcon,setPlayerName)
-        })
-    }
+    albumManagement(albumBgs, queueSongNames, nextSongs, audioArray, currentSong, playPauseSvg, aapWindow, songSources, songList, loggedIn, setMusicIcon, setPlayerName, musicSection, playSong, openAap)
 
+    playlistManagement(playlistBgs, queueSongNames, nextSongs, audioArray, currentSong, playPauseSvg, aapWindow, songSources, songList, loggedIn, setMusicIcon, setPlayerName, musicSection, playSong, API_URL)
     //Event listener  to play or pause the current song:
     playPauseBtn.addEventListener('click', () => {
         if (playPauseSvg.src.includes("/svgs/plays.svg")) {
@@ -508,7 +414,7 @@ async function main() {
                     currentSong.pop(); // Removed the old audio
                     currentSong.push(nextAudio); // Added the new audio
                     console.log(nextAudio);
-                    setPlayerName(nextAudio.src,songSources,songList)
+                    setPlayerName(nextAudio.src, songSources, songList)
                     nextAudio.play();
                     setMusicIcon(aapWindow)
                     console.log(`Now playing: ${nextAudio.src}`);
@@ -527,6 +433,7 @@ async function main() {
         playNext(currentSong, audioArray, playPauseSvg, aapWindow);
     }, 1000);
 
+
     //Temporary solution for the features which are currently unavailable
     // let anchors = document.getElementsByTagName("a")
     // for (let index = 0; index < anchors.length; index++) {
@@ -536,79 +443,28 @@ async function main() {
     //         alert("This feature will be available soon")
     //     })
     // }
-    let formButtons = document.querySelector(".searchbar").getElementsByTagName("button")
-    for (let index = 0; index < formButtons.length; index++) {
-        const element = formButtons[index];
-        element.addEventListener("click", e => {
-            e.preventDefault()
-            alert("The feature will be available soon")
-        })
-    }
-    let libraryButtons = document.querySelector(".library").querySelectorAll(".noFunction")
-    let LabBtn = [...libraryButtons]
-    for (let index = 0; index < LabBtn.length; index++) {
-        const element = LabBtn[index];
-        element.addEventListener("click", e => {
-            e.preventDefault()
-            alert("This feature will be available soon")
-        })
-    }
+    // let formButtons = document.querySelector(".searchbar").getElementsByTagName("button")
+    // for (let index = 0; index < formButtons.length; index++) {
+    //     const element = formButtons[index];
+    //     element.addEventListener("click", e => {
+    //         e.preventDefault()
+    //         alert("The feature will be available soon")
+    //     })
+    // }
+    // let libraryButtons = document.querySelector(".library").querySelectorAll(".noFunction")
+    // let LabBtn = [...libraryButtons]
+    // for (let index = 0; index < LabBtn.length; index++) {
+    //     const element = LabBtn[index];
+    //     element.addEventListener("click", e => {
+    //         e.preventDefault()
+    //         alert("This feature will be available soon")
+    //     })
+    // }
 
     //Event listeners to play previous and next song when the respective button is clicked
-    let prev = document.querySelector(".previous")
-    let next = document.querySelector(".next")
-    prev.addEventListener("click", () => {
-        if (currentSong[0].src == audioArray[0].src) {
-            currentSong[0].pause()
-            currentSong[0].currentTime = 0
-            setPlayerName(currentSong[0].src,songSources,songList)
-            currentSong[0].play()
-            setMusicIcon(aapWindow)
-        }
-        else {
-            for (let index = 0; index < audioArray.length; index++) {
-                const element = audioArray[index];
-                if (element.src == currentSong[0].src) {
-                    currentSong[0].pause()
-                    currentSong[0].currentTime = 0
-                    currentSong.pop()
-                    currentSong.push(audioArray[index - 1])
-                    setPlayerName(currentSong[0].src,songSources,songList)
-                    currentSong[0].play()
-                    setMusicIcon(aapWindow)
-                    break;
-                }
-            }
-        }
-    })
-    next.addEventListener("click", () => {
-        if (currentSong[0].src == audioArray[(audioArray.length) - 1].src) {
-            currentSong[0].pause()
-            currentSong[0].currentTime = 0
-            currentSong[0] = audioArray[0]
-            currentSong[0].play()
-            setPlayerName(currentSong[0].src,songSources,songList)
-            setMusicIcon(aapWindow)
-        }
-        else {
-            for (let index = 0; index < audioArray.length; index++) {
-                const element = audioArray[index];
-                if (element.src == currentSong[0].src) {
-                    currentSong[0].pause()
-                    currentSong[0].currentTime = 0
-                    currentSong.pop()
-                    currentSong.push(audioArray[index + 1])
-                    currentSong[0].play()
+    prevNextCtrls(currentSong, songSources, songList, aapWindow, audioArray, setPlayerName, setMusicIcon)
 
-                    setPlayerName(currentSong[0].src,songSources,songList)
-                    setMusicIcon(aapWindow)
-                    break;
-                }
-            }
-        }
-    })
-
-    //Event listener to close the aapWindow whent the close(back) button is hit
+    //Event listener to close the aapWindow when the close(back) button is hit
     let backButton = document.querySelector(".closeAap")
     backButton.addEventListener("click", (e) => {
         e.preventDefault()
@@ -629,8 +485,16 @@ async function main() {
 
     })
 
+    //Event listner to close the parent element when back button is clicked
+    let parentCloseBtns = document.querySelectorAll(".closeParent")
+    parentCloseBtns.forEach(element => {
+        element.addEventListener("click", (e) => {
+            e.preventDefault()
+            let parent = element.parentElement
+            parent.classList.add("noDisplay")
+        })
+    });
     //Code to maintain the responsiveness of the site by hiding or showing the library according to the media queries
-    let library = document.querySelector(".library")
     let menuBtn = document.querySelector(".menu")
     let libsvg = document.querySelector(".libsvg")
     menuBtn.addEventListener('click', () => {
@@ -655,26 +519,26 @@ async function main() {
             libsvg.src = "/svgs/library.svg"
         }
     })
-    
+
     //Pop Overs maintainance section:
 
     let mainSection = document.querySelector(".scbvr")
     let popovers = document.querySelectorAll('[popover]')
     popovers.forEach(element => {
-        element.addEventListener("toggle",(e)=>{
+        element.addEventListener("toggle", (e) => {
             e.preventDefault()
-            if(element.matches(":popover-open")){
+            if (element.matches(":popover-open")) {
                 mainSection.classList.add("disableBg")
             }
-            else{
+            else {
                 mainSection.classList.remove("disableBg")
             }
         })
     });
-    let forgotPassBtn= document.querySelector(".forgotPass")
-    let userNameOnLogin= document.querySelector(".logInUname")
-    forgotPassBtn.addEventListener("click",(e) =>{
-        if(userNameOnLogin.value == ""){
+    let forgotPassBtn = document.querySelector(".forgotPass")
+    let userNameOnLogin = document.querySelector(".logInUname")
+    forgotPassBtn.addEventListener("click", (e) => {
+        if (userNameOnLogin.value == "") {
             e.preventDefault()
             alert("Enter Username First.")
             return;
@@ -685,47 +549,47 @@ async function main() {
     // REQUESTS section:
     let loginBtn = document.querySelector(".login")
     let signupBtn = document.querySelector(".signup")
-    let account= document.querySelector(".account")
-    document.querySelector(".signUpForm").addEventListener('submit',async (e)=>{
+    let account = document.querySelector(".account")
+    document.querySelector(".signUpForm").addEventListener('submit', async (e) => {
         e.preventDefault();
-        signup("signUpPopOver",userFullName,currentUserName,loginBtn,signupBtn,account,API_URL)
+        signup("signUpPopOver", userFullName, currentUserName, loginBtn, signupBtn, account, API_URL)
         loggedIn.value = true
     })
     document.querySelector(".logInForm").addEventListener("submit", async (e) => {
         e.preventDefault()
-        login("logInPopOver",userFullName,currentUserName,loginBtn,signupBtn,account,API_URL)
+        login("logInPopOver", userFullName, currentUserName, loginBtn, signupBtn, account, API_URL)
         loggedIn.value = true
         console.log(loggedIn);
-        
+
     })
     document.querySelector(".logoutForm").addEventListener("submit", async (e) => {
         e.preventDefault()
-        logout("logoutConfPopOver",userFullName,currentUserName,loginBtn,signupBtn,account,API_URL,currentSong,setPlayerName,songSources,songList)
+        logout("logoutConfPopOver", userFullName, currentUserName, loginBtn, signupBtn, account, API_URL, currentSong, setPlayerName, songSources, songList)
         loggedIn.value = false
     })
-    const resetPassPopover= document.querySelector(".resetPass")
+    const resetPassPopover = document.querySelector(".resetPass")
     const otpSendingBtn = document.querySelector(".sendOtp")
     const emailForOtp = otpSendingBtn.previousElementSibling
     const otpVerificationBtn = document.querySelector(".verifyOtp")
     const otpInput = document.querySelector(".otpInput")
 
-    otpSendingBtn.addEventListener("click",async (e) => {
+    otpSendingBtn.addEventListener("click", async (e) => {
         e.preventDefault()
-        sendOtp(otpInput,otpVerificationBtn,otpSendingBtn,API_URL);
+        sendOtp(otpInput, otpVerificationBtn, otpSendingBtn, API_URL);
     })
     const emailVerificationSection = document.querySelector(".emailVerificationSection")
     const passResetSection = document.querySelector(".passResetSection")
-    otpVerificationBtn.addEventListener("click",async(e)=>{
+    otpVerificationBtn.addEventListener("click", async (e) => {
         e.preventDefault()
-        verifyOtp(otpInput,emailForOtp,emailVerificationSection,passResetSection,otpVerificationBtn,otpSendingBtn,API_URL)
+        verifyOtp(otpInput, emailForOtp, emailVerificationSection, passResetSection, otpVerificationBtn, otpSendingBtn, API_URL)
     })
     const passResetForm = document.querySelector(".passwordResetForm")
-    passResetForm.addEventListener("submit", async (e) =>{
+    passResetForm.addEventListener("submit", async (e) => {
         e.preventDefault()
-        changePass(emailVerificationSection,passResetSection,resetPassPopover,API_URL);
+        changePass(emailVerificationSection, passResetSection, resetPassPopover, API_URL);
     })
-    let accInfoElem = document.querySelector(".accInfo") 
-    document.querySelector(".profile").addEventListener("click",() => {
+    let accInfoElem = document.querySelector(".accInfo")
+    document.querySelector(".profile").addEventListener("click", () => {
         accInfoElem.classList.toggle("moved")
     })
 }
